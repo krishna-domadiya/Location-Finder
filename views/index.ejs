@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- <meta http-equiv="content-type" content="text/html; charset=UTF-8"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, ">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>MaxMind Location Finder</title>
+        <script>
+          function validate() {
+            let ipAddresses = document.forms["form"]["ipAddresses"].value;
+            if (!ipAddresses) {
+              alert("Please enter the value of IP Address");
+              return false;
+            }
+          }
+        </script>
+    </head>
+    <body>
+        <div class="jumbotron">
+          <div class="container">
+            <form action="/" method="POST" name="form" onsubmit="return validate()">
+                <div class="form-group">
+                <label for="ipAddress">IP Address </label>
+                  <input type="text" value="<%=ip%>" name="ipAddresses" class="form-control" id="ipAddresses" aria-describedby="ipHelp" placeholder="Enter IP addresses in comma separated format">
+                  <!-- <small id="emailHelp" class="form-text text-muted">Enter IP addresses in comma separated format</small> -->
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+          </div>
+          <br>
+          <div class="container">
+            <% if (content.length) { %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">IP Address</th>
+                  <th scope="col">Country Code</th>
+                  <th scope="col">Postal Code</th>
+                  <th scope="col">City Name</th>
+                  <th scope="col">Time Zone</th>
+                  <th scope="col">Accuracy Radius</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <% content.forEach(element => { %>
+                    <tr>
+                      <td><%= element.ip ? element.ip : "N/A" %></td>
+                      <td><%= element.code ? element.code : "N/A" %></td>
+                      <td><%= element.postal ? element.postal : "N/A" %></td>
+                      <td><%= element.city ? element.city : "N/A" %></td>
+                      <td><%= element.timezone ? element.timezone : "N/A" %></td>
+                      <td><%= element.radius ? element.radius : "N/A" %></td>
+                    </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+            <% } %>
+          </div>
+          <br>
+          <% if (errorMsg) { %>
+            <div class="container"><%=errorMsg%></div>
+          <% } %>
+        </div>
+    </body>
+</html>
